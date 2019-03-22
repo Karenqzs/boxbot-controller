@@ -224,7 +224,7 @@ void serialEvent() {
     if (input == "forward") {
       Serial.println("FORWARD");
       forward();
-    } else if (input == "backwards") {
+    } else if (input == "reverse") {
       Serial.println("REVERSE");
       reverse();
     } else if (input == "left") {
