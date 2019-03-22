@@ -1,14 +1,3 @@
-/**
-  Remote Control Motor Driver
-  
-  Set two motor pins based on input from an infrared remote control.
- **/
-
-#include <IRremote.h>
-
-int remoteInputPin = 2;
-IRrecv receiver(remoteInputPin);
-decode_results results;
 
 int motorRightForward   = 9;
 int motorRightReverse   = 10;
@@ -30,8 +19,8 @@ unsigned long debounceDelay = 500;    // the debounce time; increase if the outp
 
 
 void setup() {
-  Serial.begin(9600);
-  receiver.enableIRIn();
+  Serial.begin(115200);
+  
   pinMode(6,OUTPUT);
   pinMode(leftLight, OUTPUT);
   pinMode(rightLight, OUTPUT);
@@ -217,30 +206,41 @@ bool turnSignal(int side) {
 
 
 
-void loop() {
-  if (receiver.decode(&results)) {
-    Serial.println(results.value, HEX);
+void serialEvent() {
+  String input = Serial.readStringUntil('\n');
+  input.trim();
 
-    if (results.value == 0xC1AA0DF2) {
+  if (input == "forward") {
+    Serial.println("FORWARD!");
+    // go forward
+  } else if (input == "left") {
+    // go left
+  } else if (input == "right") {
+    // go right
+  } else if (input == "backwards") {
+    // go back
+  }
+
+    if (input == "forward") {
       Serial.println("FORWARD");
       forward();
-    } else if (results.value == 0xC1AA4DB2) {
+    } else if (input == "backwards") {
       Serial.println("REVERSE");
       reverse();
-    } else if (results.value == 0xC1AACD32) {
+    } else if (input == "left") {
       Serial.println("LEFT");
       left();
-    } else if (results.value == 0xC1AA8D72) {
+    } else if (input == "right") {
       Serial.println("RIGHT");
       right();
-    } else if (results.value == 0xC1AAA15E) {
+    } else if (input == "halt") {
       Serial.println("HALT");
       halt();
-    } else if (results.value == 0xC1AA09F6) {
+    } else if (input == "dance") {
       Serial.println("DANCE");
       dance();
     }
-    if (results.value == 0xC1AA59A6) {
+    if (input == "left signal") {
       Serial.println("left turn signal");
       if ((millis() - lastDebounceTime) > debounceDelay) {
       leftBlink = !leftBlink;
@@ -248,7 +248,7 @@ void loop() {
       lastDebounceTime = millis();
       }
     }
-    if (results.value == 0xC1AA21DE) {
+    if (input == "right signal") {
       Serial.println("right turn signal");
       if ((millis() - rlastDebounceTime) > debounceDelay) {
       rightBlink = !rightBlink;
@@ -256,26 +256,25 @@ void loop() {
       rlastDebounceTime = millis();
       }
     }
-    if (results.value == 0xC1AA619E) {
+    if (input == "set speed 1") {
       Serial.println("set speed one");
       analogWrite(6,140);
      
     }
-    if (results.value == 0xC1AA11EE) {
+    if (input == "set speed 2") {
       Serial.println("set speed two");
       analogWrite(6,190);
       
     }
-    if (results.value == 0xC1AA19E6) {
+    if (input == "set speed 3") {
       Serial.println("set speed three");
       analogWrite(6,255);
       
     }
 
-    
-    receiver.resume();
   }
-  
+
+void loop(){
   if (leftBlink){
       turnSignal(leftLight);
     }else{
@@ -287,6 +286,5 @@ void loop() {
       turnSignal(rightLight);
     }else{
       digitalWrite(rightLight, LOW);
-    }
-    
+    }    
 }
