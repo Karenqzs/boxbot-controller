@@ -30,9 +30,16 @@ class ControlComponent extends React.Component {
   render() {
     // four buttons. see index.html for styling.
     return <div className="wrapper">
+       <button onClick={() => this.sendMessage("left signal")}>left turn</button><button onClick={() => this.sendMessage("right signal")}>right turn</button><br />
         <button onClick={() => this.sendMessage("forward")}>Fwd</button><br />
-        <button onClick={() => this.sendMessage("left")}>Left</button> <button onClick={() => this.sendMessage("right")}>Right</button><br />
-        <button onClick={() => this.sendMessage("reverse")}>Back</button>
+        <button onClick={() => this.sendMessage("left")}>Left</button> <button onClick={() => this.sendMessage("halt")}>halt</button> <button onClick={() => this.sendMessage("right")}>Right</button><br />
+        <button onClick={() => this.sendMessage("reverse")}>Back</button><br />
+        <button onClick={() => this.sendMessage("dance")}>Dance</button><br />
+        <button onClick={() => this.sendMessage("set speed 1")}>1</button><button onClick={() => this.sendMessage("set speed 2")}>2</button><button onClick={() => this.sendMessage("set speed 3")}>3</button>
+        
+        
+       
+        
       </div>
   }
 }
