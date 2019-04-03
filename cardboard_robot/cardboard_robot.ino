@@ -33,20 +33,20 @@ void setup() {
 }
 
 void forward() {
-  digitalWrite(motorRightForward, HIGH);
-  digitalWrite(motorRightReverse, LOW);
-  digitalWrite(motorLeftForward, HIGH);
-  digitalWrite(motorLeftReverse, LOW);
-  digitalWrite(headlight,HIGH);
-  digitalWrite(reverselight,LOW);
+  digitalWrite(motorRightForward, HIGH);// turns the motor ON
+  digitalWrite(motorRightReverse, LOW);// turns the motor OFF
+  digitalWrite(motorLeftForward, HIGH);// turns the motor ON
+  digitalWrite(motorLeftReverse, LOW); //turns the motor OFF
+  digitalWrite(headlight,HIGH);// turns the LED ON
+  digitalWrite(reverselight,LOW);// turns the LED OFF
  
 }
 
 void reverse() {
   digitalWrite(motorRightForward, LOW);
-  analogWrite(motorRightReverse, 140);
+  analogWrite(motorRightReverse, 140);// turns the motor ON. set the speed slower than moving forward
   digitalWrite(motorLeftForward, LOW);
-  analogWrite(motorLeftReverse, 140);
+  analogWrite(motorLeftReverse, 140); // turns the motor ON. set the speed slower than moving forward
   digitalWrite(headlight,LOW);
   digitalWrite(reverselight,HIGH);
 }
@@ -78,9 +78,10 @@ void halt() {
   digitalWrite(reverselight,LOW);  
 }
 
+//set a dance mode. 
 void dance() {
-  forward();
-  delay(500);
+  forward(); // run the forward function
+  delay(500); // wait for a half-second
   left();
   delay(500);
   right();
@@ -181,7 +182,7 @@ void dance() {
   delay(100);
   right();
   delay(100);
-  halt();
+  halt(); // stop
 
 }
 
@@ -256,24 +257,26 @@ void serialEvent() {
       rlastDebounceTime = millis();
       }
     }
+  // set 3 speed modes
     if (input == "set speed 1") {
       Serial.println("set speed one");
-      analogWrite(6,140);
+      analogWrite(6,140); // analogWrite pin6 values to 140 for speed
      
     }
     if (input == "set speed 2") {
       Serial.println("set speed two");
-      analogWrite(6,190);
+      analogWrite(6,190); // analogWrite pin6 values to 190 for speed
       
     }
     if (input == "set speed 3") {
       Serial.println("set speed three");
-      analogWrite(6,255);
+      analogWrite(6,255);// analogWrite pin6 values to 255 for speed
       
     }
 
   }
 
+// set turnlights blink only when making a turn, otherwise they are OFF.
 void loop(){
   if (leftBlink){
       turnSignal(leftLight);
