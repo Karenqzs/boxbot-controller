@@ -1,4 +1,4 @@
-
+//initialized several digital pins as outputs
 int motorRightForward   = 9;
 int motorRightReverse   = 10;
 int motorLeftForward    = 11;
@@ -17,18 +17,18 @@ unsigned long rlastDebounceTime = 0; // the last time the output pin was toggled
 unsigned long debounceDelay = 500;    // the debounce time; increase if the output flickers
 
 
-
+//sets up the specific pin as outputs
 void setup() {
   Serial.begin(115200);
   
-  pinMode(6,OUTPUT);
-  pinMode(leftLight, OUTPUT);
-  pinMode(rightLight, OUTPUT);
-  pinMode(motorRightForward, OUTPUT);
-  pinMode(motorRightReverse, OUTPUT);
-  pinMode(motorLeftForward, OUTPUT);
-  pinMode(motorLeftReverse, OUTPUT);
-  analogWrite(6,255);
+  pinMode(6,OUTPUT); // sets the digital pin 6 as output
+  pinMode(leftLight, OUTPUT); // sets the digital pin 4 as output
+  pinMode(rightLight, OUTPUT);// sets the digital pin 5 as output
+  pinMode(motorRightForward, OUTPUT);// sets the digital pin 9 as output
+  pinMode(motorRightReverse, OUTPUT);// sets the digital pin 10 as output
+  pinMode(motorLeftForward, OUTPUT);// sets the digital pin 11 as output
+  pinMode(motorLeftReverse, OUTPUT);// sets the digital pin 12 as output
+  analogWrite(6,255);// analogWrite values from 6 to 255
   
 }
 
