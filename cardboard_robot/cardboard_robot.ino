@@ -44,9 +44,9 @@ void forward() {
 
 void reverse() {
   digitalWrite(motorRightForward, LOW);
-  analogWrite(motorRightReverse, 140);// turns the motor ON. set the speed slower than moving forward
+  digitalWrite(motorRightReverse, HIGH);
   digitalWrite(motorLeftForward, LOW);
-  analogWrite(motorLeftReverse, 140); // turns the motor ON. set the speed slower than moving forward
+  digitalWrite(motorLeftReverse, HIGH); 
   digitalWrite(headlight,LOW);
   digitalWrite(reverselight,HIGH);
 }
@@ -190,8 +190,8 @@ bool turnSignal(int side) {
    unsigned long currentMillis = millis();
 
   if (currentMillis - previousMillis >= interval) {
-    // save the last time you blinked the LED
-    previousMillis = currentMillis;
+    
+    previousMillis = currentMillis; // save the last time you blinked the LED
 
     // if the LED is off turn it on and vice-versa:
     if (ledState == LOW) {
@@ -276,18 +276,18 @@ void serialEvent() {
 
   }
 
-// set turnlights blink only when making a turn, otherwise they are OFF.
+// set turnlights blink only when turnsignals are on.
 void loop(){
   if (leftBlink){
-      turnSignal(leftLight);
+      turnSignal(leftLight); //blink left
     }else{
-      digitalWrite(leftLight, LOW);
+      digitalWrite(leftLight, LOW); 
     }
   
     
   if (rightBlink){
-      turnSignal(rightLight);
+      turnSignal(rightLight); //blink right
     }else{
-      digitalWrite(rightLight, LOW);
+      digitalWrite(rightLight, LOW); 
     }    
 }
